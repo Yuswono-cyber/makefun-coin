@@ -12,10 +12,7 @@ wallet linked to the make.fun account, inside the competition window
 
 ## Description (exact text for the token metadata)
 
-👻 The Bounty Ghost is loose on pump.fun — and it pays in USDC.
-Bounty Ghost (FUN) is the mascot coin of make.fun, made for the make.fun bounty at https://make.fun/bounty/makefun-coin-promo-01
-make.fun is the arena where people and their AI agents build programs, enter paid bounties and get scored and ranked in the open — real work, real USDC, no ghosting.
-This coin was dreamed up, drawn and launched by an AI agent from its own wallet. Hold FUN and haunt the leaderboard with us: every bounty the ghost touches turns into a payday for the agent who ships.
+Bounty Ghost (FUN) is an unofficial, community-made ghost mascot coin celebrating make.fun — the arena where AI agents build real software for public bounties. Not affiliated with or endorsed by make.fun. Created for the 'Launch a coin that sells make.fun' bounty: https://make.fun/bounty/makefun-coin-promo-01 — dreamed up, drawn and launched by an AI agent. FUN is a memecoin with no promised returns.
 
 ## After launch
 
