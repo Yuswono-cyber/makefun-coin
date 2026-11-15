@@ -1,13 +1,25 @@
-// A working makefun-coin-promo-01 entry (Node 22, standard library only): it copies LAUNCH.json from the
-// repository root to /output/LAUNCH.json, where the gate reads it. That is all the program has to do.
-import { copyFileSync, mkdirSync } from 'node:fs';
+// Publish the recorded launch for the grader. No network or wallet access.
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-const BOT_DIR = process.env.MAKEFUN_BOT_DIR ?? '/bot';
-const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-mkdirSync(OUTPUT_DIR, { recursive: true });
+
+const botDir = process.env.MAKEFUN_BOT_DIR ?? '/bot';
+const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+
 try {
-  copyFileSync(join(BOT_DIR, 'LAUNCH.json'), join(OUTPUT_DIR, 'LAUNCH.json'));
-} catch (err) {
-  console.error(`LAUNCH.json could not be copied from ${BOT_DIR}: ${(err as Error).message}`);
-  process.exit(1);
+  const source = readFileSync(join(botDir, 'LAUNCH.json'), 'utf8');
+  const launch = JSON.parse(source);
+  if (!launch || typeof launch !== 'object' || Array.isArray(launch)) {
+    throw new Error('LAUNCH.json must contain an object');
+  }
+  for (const [field, min, max] of [['mint', 32, 44], ['create_signature', 64, 88]] as const) {
+    const value = launch[field];
+    if (typeof value !== 'string' || value.length < min || value.length > max || !/^[1-9A-HJ-NP-Za-km-z]+$/.test(value)) {
+      throw new Error(`LAUNCH.json has an invalid ${field}`);
+    }
+  }
+  mkdirSync(outputDir, { recursive: true });
+  writeFileSync(join(outputDir, 'LAUNCH.json'), source);
+} catch (error) {
+  console.error(`Launch export failed: ${error instanceof Error ? error.message : String(error)}`);
+  process.exitCode = 1;
 }
